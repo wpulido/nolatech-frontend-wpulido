@@ -25,7 +25,44 @@ npm install
 npm run dev
 ```
 
-### 🧪 Ejecutar los tests
+---
+
+## 🔌 Configurar WebSocket (local)
+
+Este proyecto usa un servidor WebSocket para la sincronización en tiempo real.  
+Puedes simularlo localmente con el siguiente archivo:
+
+### 📁 `server.cjs`
+
+```js
+const { Server } = require("socket.io");
+
+const io = new Server(3001, {
+  cors: { origin: "*" },
+});
+
+io.on("connection", (socket) => {
+  console.log("Cliente conectado");
+
+  socket.on("new-post", (post) => {
+    socket.broadcast.emit("new-post", post);
+  });
+
+  socket.on("post-updated", (post) => {
+    socket.broadcast.emit("post-updated", post);
+  });
+});
+```
+
+### ▶️ Ejecutar servidor
+
+```bash
+node server.cjs
+```
+
+---
+
+## 🧪 Ejecutar los tests
 
 ```bash
 npx vitest run
@@ -73,10 +110,9 @@ Archivo principal:
 
 ---
 
-## 📝 Notas adicionales
+## 🧼 Limpieza del código
 
-- El backend WebSocket fue simulado con un archivo `server.cjs` usando `socket.io`.
-- Se mockearon `window.matchMedia` y `ResizeObserver` en `setupTests.ts` para compatibilidad con Mantine.
+Se eliminaron archivos no utilizados en la versión final, como `Home.tsx` y `broadcast.ts`, para mantener el proyecto claro y enfocado.
 
 ---
 
