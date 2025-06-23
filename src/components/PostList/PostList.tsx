@@ -72,8 +72,14 @@ export function PostList() {
   const socketHandlers = useMemo(
     () => ({
       "new-post": (post: Post) => {
-        setPosts((prev) => [...prev, post]);
-        setFilteredPosts((prev) => [...prev, post]);
+        setPosts((prev) => {
+          const exists = prev.some((p) => p.id === post.id);
+          return exists ? prev : [...prev, post];
+        });
+        setFilteredPosts((prev) => {
+          const exists = prev.some((p) => p.id === post.id);
+          return exists ? prev : [...prev, post];
+        });
       },
       "post-updated": (post: Post) => {
         setPosts((prev) => prev.map((p) => (p.id === post.id ? post : p)));
