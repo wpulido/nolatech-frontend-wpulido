@@ -1,3 +1,5 @@
+/* This code snippet is setting up mock implementations for `window.matchMedia` and `ResizeObserver` in
+a testing environment. */
 import "@testing-library/jest-dom";
 
 // Mock window.matchMedia
